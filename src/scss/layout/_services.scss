@@ -1,0 +1,25 @@
+.list-services {
+    @include telefono {
+        @include grid(2, $separacion / 2);
+    }
+}
+
+.servicio {
+    background-color: $blanco;
+    border-radius: 1rem;
+    padding: $separacion / 2;
+    margin-bottom: 2rem;
+
+    @include telefono {
+        margin-bottom: 0;
+    }
+    p { margin: 0;}
+    .nombre-servicio {
+        color: $negro;
+        margin-bottom: $separacion / 4;
+    }
+    .precio-servicio {
+        color: $azul;
+        font-weight: $bold;
+    }
+}
