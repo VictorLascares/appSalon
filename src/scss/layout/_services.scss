@@ -22,4 +22,10 @@
         color: $azul;
         font-weight: $bold;
     }
+    &.activo {
+        background-color: $azul;
+        p {
+            color: $blanco;
+        }
+    }
 }
