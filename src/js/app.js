@@ -1,9 +1,50 @@
+let pagina = 1;
+
 document.addEventListener('DOMContentLoaded', function() {
     iniciarApp();
 });
 
 function iniciarApp() {
     mostrarServicios();
+
+    // Resalta el Div Actual segun el tab al que se presiona
+    mostrarSeccion();
+    // Oculta o muestra una seccion segun el tab al que se presiona
+    cambiarSeccion();
+}
+
+function mostrarSeccion() {
+    const seccionActual = document.querySelector(`#paso-${pagina}`)
+    seccionActual.classList.add('mostrar-seccion');
+
+    // Resalta el Tab Actual
+    const tab = document.querySelector(`[data-paso="${pagina}"]`);
+    tab.classList.add('actual');
+}
+
+function cambiarSeccion() {
+    const enlaces = document.querySelectorAll('.tabs button');
+
+    enlaces.forEach(enlace => {
+        enlace.addEventListener('click', e => {
+            e.preventDefault();
+            pagina = parseInt(e.target.dataset.paso);
+            
+            // Eliminar mostrar-seccion de la seccion anterior
+            document.querySelector('.mostrar-seccion').classList.remove('mostrar-seccion');
+
+            // Agrega mostrar-seccion donde dimos click
+            const seccion = document.querySelector(`#paso-${pagina}`);
+            seccion.classList.add('mostrar-seccion');
+            
+            // Eliminar la clase de actual en el tab anterior
+            document.querySelector('.tabs button.actual').classList.remove('actual');
+            
+
+            // Agrega la clase de actual en nuevo tab
+            document.querySelector(`[data-paso="${pagina}"]`).classList.add('actual');
+        })
+    })
 }
 
 async function mostrarServicios() {

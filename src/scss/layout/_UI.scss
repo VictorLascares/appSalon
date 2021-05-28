@@ -15,6 +15,7 @@ body {
         background-size: cover;
         @include tablet {
             height: auto;
+            background-attachment: fixed;
         }
     }
 }
@@ -26,7 +27,7 @@ body {
     .section {
         display: none;
         margin-top: $separacion / 2;
-        &:first-of-type {
+        &.mostrar-seccion {
             display: block;
         }
     }
