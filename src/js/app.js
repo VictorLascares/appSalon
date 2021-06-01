@@ -92,6 +92,7 @@ async function mostrarServicios() {
             // Generar contenedor del servicio
             const servicioDiv = document.createElement('DIV');
             servicioDiv.classList.add('servicio');
+            servicioDiv.dataset.idServicio = id;
 
             // Selecciona un servicio para la cita
             servicioDiv.onclick = seleccionarServicio;
@@ -117,9 +118,29 @@ function seleccionarServicio(e)  {
 
     if (elemento.classList.contains('activo')) {
         elemento.classList.remove('activo');
+
+        eliminarServicio( elemento.dataset.idServicio );
     } else {
         elemento.classList.add('activo');
+
+        const servicioObj = {
+            id: parseInt( elemento.dataset.idServicio ),
+            nombre: elemento.firstElementChild.textContent,
+            precio: elemento.lastElementChild.textContent
+        }
+        agregarServicio(servicioObj);
+
     }
+}
+
+function eliminarServicio( id ) {
+    const { servicios } = cita;
+    cita.servicios = servicios.filter( servicio => servicio.id !== id);
+}
+
+function agregarServicio( servicio ) {
+    const { servicios } = cita;
+    cita.servicios = [...servicios, servicio]
 }
 
 function paginaSiguiente() {
