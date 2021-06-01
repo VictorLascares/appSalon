@@ -22,3 +22,14 @@
         border: none;
     }
 }
+
+.alerta {
+    padding: $separacion / 4;
+    text-align: center;
+    color: $blanco;
+    
+
+    &.error {
+        background-color: rgb(194,0,0);
+    }
+}

@@ -28,6 +28,9 @@ function iniciarApp() {
 
     // Muestra el resumen de la cita ( o mensaje de error en caso de no pasar la validacion)
     mostrarResumen();
+
+    // Almacena el nombre de la cita en el objeto
+    nombreCita();
 }
 
 function mostrarSeccion() {
@@ -199,4 +202,33 @@ function mostrarResumen() {
         // Agregar a resumen Div
         resumenDiv.appendChild(noServicios);
     }
+}
+function nombreCita() {
+    const nombreInput = document.querySelector('#nombre');
+
+    nombreInput.addEventListener('change', elemento => {
+        const nombreTexto = elemento.target.value.trim();
+        if ( nombreTexto === '' || nombreTexto.length < 3) {
+            mostrarAlerta('Nombre no valido', 'error');
+        } else {
+            cita.nombre = nombreTexto;
+        }
+    })
+}
+
+function mostrarAlerta( mensaje, tipo ) {
+    const alerta = document.createElement('P');
+    alerta.textContent = mensaje;
+    alerta.classList.add('alerta');
+
+    if (tipo === 'error') {
+        alerta.classList.add('error');
+    }
+
+    const infoCliente = document.querySelector('#paso-2');
+    infoCliente.appendChild(alerta);
+
+    setTimeout(() => {
+        alerta.remove();
+    }, 3000)
 }
