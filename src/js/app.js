@@ -37,6 +37,9 @@ function iniciarApp() {
     
     // deshabilita dias pasados
     deshabilitarFechaAnterior();
+
+    // Almacena la hora de la cita en el objeto
+    horaCita();
 }
 
 function mostrarSeccion() {
@@ -252,7 +255,7 @@ function fechaCita() {
             fechaInput.value = '';
             mostrarAlerta('No hay servicio los fines de semana', 'error')
         } else {
-            cita.fecha = fechaInput;
+            cita.fecha = fechaInput.value;
         }
     })
 }
@@ -267,4 +270,19 @@ function deshabilitarFechaAnterior() {
     // Formato deseado: AAAA-MM-DD
     const fechaDeshabilitar = `${year}-${mes<10 ? `0${mes}`: mes}-${dia<10 ? `0${dia}`: dia}`;
     inputFecha.min = fechaDeshabilitar;
+}
+function horaCita() {
+    const inputHora = document.querySelector('#hora');
+    inputHora.addEventListener('input', e => {
+
+        const horaCita = e.target.value; 
+        const hora = horaCita.split(':')[0];
+
+        if(hora < 10 || hora > 18) {
+            mostrarAlerta('Hora no valida', 'error');
+            inputHora.value = '';
+        } else {
+            cita.hora = horaCita;
+        }
+    })
 }
