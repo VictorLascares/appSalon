@@ -131,7 +131,7 @@ function seleccionarServicio(e)  {
     if (elemento.classList.contains('activo')) {
         elemento.classList.remove('activo');
 
-        eliminarServicio( elemento.dataset.idServicio );
+        eliminarServicio( parseInt(elemento.dataset.idServicio) );
     } else {
         elemento.classList.add('activo');
 
@@ -143,11 +143,14 @@ function seleccionarServicio(e)  {
         agregarServicio(servicioObj);
 
     }
+    console.log(cita);
 }
 
 function eliminarServicio( id ) {
     const { servicios } = cita;
-    cita.servicios = servicios.filter( servicio => servicio.id !== id);
+    const resultado = servicios.findIndex(servicio => servicio.id === id);
+    servicios.splice(parseInt(resultado), 1);
+    cita.servicios = servicios;
 }
 
 function agregarServicio( servicio ) {
@@ -196,6 +199,7 @@ function botonesPaginador() {
 }
 
 function mostrarResumen() {
+    console.log(cita);
     // Destructuring
     const { nombre, fecha, hora, servicios } = cita;
 
@@ -240,6 +244,8 @@ function mostrarResumen() {
 
     serviciosCita.appendChild(headingServicios);
 
+    let cantidad = 0;
+
     // Iterar sobre el arreglo de servicios
     servicios.forEach(servicio => {
         const { nombre, precio } = servicio;
@@ -254,18 +260,29 @@ function mostrarResumen() {
         const precioServicio = document.createElement('P');
         precioServicio.textContent = precio;
         precioServicio.classList.add('precio');
-        
+
+        const totalServicio = precio.split('$')[1];
+        cantidad += parseInt( totalServicio.trim() );
+
+        // Colocar texto y precio en el div
         contenedorServicio.appendChild(textoServicio);
         contenedorServicio.appendChild(precioServicio);
         
         serviciosCita.appendChild(contenedorServicio);
     });
-    
+    console.log(cantidad);
+
     resumenDiv.appendChild(headingCita);
     resumenDiv.appendChild(nombreCita);
     resumenDiv.appendChild(fechaCita);
     resumenDiv.appendChild(horaCita);
     resumenDiv.appendChild(serviciosCita);
+
+    const cantidadPagar = document.createElement('P');
+    cantidadPagar.classList.add('total');
+    cantidadPagar.innerHTML = `<span>Total a Pagar:</span> $${cantidad}`;
+
+    resumenDiv.appendChild(cantidadPagar);
 }
 function nombreCita() {
     const nombreInput = document.querySelector('#nombre');
