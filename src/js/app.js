@@ -219,6 +219,9 @@ function mostrarResumen() {
         return;
     }
 
+    const headingCita = document.createElement('H3');
+    headingCita.textContent = 'Resumen de Cita';
+
     // Mostrar el resumen 
     const nombreCita = document.createElement('P');
     nombreCita.innerHTML = `<span>Nombre:</span> ${nombre}`;
@@ -229,29 +232,40 @@ function mostrarResumen() {
     const horaCita = document.createElement('P');
     horaCita.innerHTML = `<span>Hora:</span> ${hora}`;
     
-    resumenDiv.appendChild(nombreCita);
-    resumenDiv.appendChild(fechaCita);
-    resumenDiv.appendChild(horaCita);
-    
+    const serviciosCita = document.createElement('DIV');
+    serviciosCita.classList.add('resumen-servicios');
+
+    const headingServicios = document.createElement('H3');
+    headingServicios.textContent = 'Resumen de Servicios';
+
+    serviciosCita.appendChild(headingServicios);
+
     // Iterar sobre el arreglo de servicios
     servicios.forEach(servicio => {
         const { nombre, precio } = servicio;
-
+        
         const contenedorServicio = document.createElement('DIV');
         contenedorServicio.classList.add('contenedor-servicio');
-
+        
         const textoServicio = document.createElement('P');
         textoServicio.textContent = nombre;
-
+        textoServicio.classList.add('nombre');
+        
         const precioServicio = document.createElement('P');
         precioServicio.textContent = precio;
-
+        precioServicio.classList.add('precio');
+        
         contenedorServicio.appendChild(textoServicio);
         contenedorServicio.appendChild(precioServicio);
-
-        resumenDiv.appendChild(contenedorServicio);
+        
+        serviciosCita.appendChild(contenedorServicio);
     });
-
+    
+    resumenDiv.appendChild(headingCita);
+    resumenDiv.appendChild(nombreCita);
+    resumenDiv.appendChild(fechaCita);
+    resumenDiv.appendChild(horaCita);
+    resumenDiv.appendChild(serviciosCita);
 }
 function nombreCita() {
     const nombreInput = document.querySelector('#nombre');
