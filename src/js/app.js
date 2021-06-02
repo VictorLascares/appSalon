@@ -228,10 +228,30 @@ function mostrarResumen() {
 
     const horaCita = document.createElement('P');
     horaCita.innerHTML = `<span>Hora:</span> ${hora}`;
-
+    
     resumenDiv.appendChild(nombreCita);
     resumenDiv.appendChild(fechaCita);
     resumenDiv.appendChild(horaCita);
+    
+    // Iterar sobre el arreglo de servicios
+    servicios.forEach(servicio => {
+        const { nombre, precio } = servicio;
+
+        const contenedorServicio = document.createElement('DIV');
+        contenedorServicio.classList.add('contenedor-servicio');
+
+        const textoServicio = document.createElement('P');
+        textoServicio.textContent = nombre;
+
+        const precioServicio = document.createElement('P');
+        precioServicio.textContent = precio;
+
+        contenedorServicio.appendChild(textoServicio);
+        contenedorServicio.appendChild(precioServicio);
+
+        resumenDiv.appendChild(contenedorServicio);
+    });
+
 }
 function nombreCita() {
     const nombreInput = document.querySelector('#nombre');
