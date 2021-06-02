@@ -31,6 +31,9 @@ function iniciarApp() {
 
     // Almacena el nombre de la cita en el objeto
     nombreCita();
+
+    // Almacena la fecha de la cita en el objeto
+    fechaCita();
 }
 
 function mostrarSeccion() {
@@ -217,6 +220,10 @@ function nombreCita() {
 }
 
 function mostrarAlerta( mensaje, tipo ) {
+    const alertaPrevia = document.querySelector('.alerta');
+    if(alertaPrevia) {
+        return;
+    }
     const alerta = document.createElement('P');
     alerta.textContent = mensaje;
     alerta.classList.add('alerta');
@@ -224,11 +231,26 @@ function mostrarAlerta( mensaje, tipo ) {
     if (tipo === 'error') {
         alerta.classList.add('error');
     }
-
-    const infoCliente = document.querySelector('#paso-2');
-    infoCliente.appendChild(alerta);
+    const formulario = document.querySelector('.formulario');
+    formulario.appendChild(alerta);
 
     setTimeout(() => {
         alerta.remove();
     }, 3000)
+}
+
+function fechaCita() {
+    const fechaInput = document.querySelector('#fecha');
+
+    fechaInput.addEventListener('input', elemento => {
+        const dia = new Date(elemento.target.value).getUTCDay();
+        console.log(dia);
+        if([0,6].includes(dia)) {
+            elemento.preventDefault();
+            fechaInput.value = '';
+            mostrarAlerta('No hay servicio los fines de semana', 'error')
+        } else {
+            cita.fecha = fechaInput;
+        }
+    })
 }
