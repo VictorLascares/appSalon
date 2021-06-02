@@ -187,6 +187,7 @@ function botonesPaginador() {
         case 3:
             paginaSiguiente.classList.add('ocultar');
             paginaAnterior.classList.remove('ocultar');
+            mostrarResumen(); // Estamos en la pagina 3, carga el resumen de la cita
             break;
         default:
             break;
@@ -201,6 +202,11 @@ function mostrarResumen() {
     // Seleccionar el resumen
     const resumenDiv = document.querySelector('.contenido-resumen');
 
+    // Limpia el HTML previo
+    while( resumenDiv.firstChild ) {
+        resumenDiv.removeChild(resumenDiv.firstChild);
+    }
+
     // Validacion de objeto
     if(Object.values(cita).includes('')) {
         const noServicios = document.createElement('P');
@@ -210,7 +216,22 @@ function mostrarResumen() {
 
         // Agregar a resumen Div
         resumenDiv.appendChild(noServicios);
+        return;
     }
+
+    // Mostrar el resumen 
+    const nombreCita = document.createElement('P');
+    nombreCita.innerHTML = `<span>Nombre:</span> ${nombre}`;
+
+    const fechaCita = document.createElement('P');
+    fechaCita.innerHTML = `<span>Fecha:</span> ${fecha}`;
+
+    const horaCita = document.createElement('P');
+    horaCita.innerHTML = `<span>Hora:</span> ${hora}`;
+
+    resumenDiv.appendChild(nombreCita);
+    resumenDiv.appendChild(fechaCita);
+    resumenDiv.appendChild(horaCita);
 }
 function nombreCita() {
     const nombreInput = document.querySelector('#nombre');
